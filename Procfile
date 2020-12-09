@@ -1,1 +1,1 @@
-web: application/third_party/bin/heroku-php-apache2
+web: application/third_party/heroku-php-apache2
