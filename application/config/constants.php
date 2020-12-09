@@ -116,7 +116,8 @@ if(!empty($path) && $path[(strlen($path) - 1)] == DIRECTORY_SEPARATOR) {
 if(!empty($path) && $path[0] != DIRECTORY_SEPARATOR) {
 	$path = DIRECTORY_SEPARATOR . $path;
 }
-defined("ABSOLUTE_PATH") OR define("ABSOLUTE_PATH", "");
+defined("ABSOLUTE_PATH") OR define("ABSOLUTE_PATH", $path);
+$path = null;
 
 defined('PATH_CSS')               OR define('PATH_CSS', ABSOLUTE_PATH . '/assets/css/');
 defined('PATH_IMG')               OR define('PATH_IMG', ABSOLUTE_PATH . '/assets/images/');
