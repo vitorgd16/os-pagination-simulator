@@ -103,10 +103,24 @@ defined('THIRDPARTY_PATH')        OR define('THIRDPARTY_PATH', APPPATH . '/third
 defined('CODE_SEP')               OR define('CODE_SEP', '...@@*!)(W{}!!__(SEPARATOR_CODE)__@@*!)(W{}!!...');
 defined('NOME_EMPRESA')           OR define('NOME_EMPRESA', "Projeto de Paginação");
 
-include_once CONFIG_PATH . 'constantsPath.php';
-defined('PATH_CSS')               OR define('PATH_CSS', PATH . '/assets/css/');
-defined('PATH_IMG')               OR define('PATH_IMG', PATH . '/assets/images/');
-defined('PATH_JS')                OR define('PATH_JS', PATH . '/assets/js/');
-defined('PATH_PLUGINS')           OR define('PATH_PLUGINS', PATH . '/assets/plugins/');
-defined('PATH_LIBS')              OR define('PATH_LIBS', PATH . '/assets/libs/');
-defined('PATH_FONTS')             OR define('PATH_FONTS', PATH . '/assets/fonts/');
+if(file_exists(CONFIG_PATH . 'constantsPath.php')) {
+	include_once CONFIG_PATH . 'constantsPath.php';
+}
+defined("PATH") OR define("PATH", "");
+
+$path = PATH;
+$path = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, $path);
+if(!empty($path) && $path[(strlen($path) - 1)] == DIRECTORY_SEPARATOR) {
+	$path = substr_replace($path,"", $path,1);
+}
+if(!empty($path) && $path[0] != DIRECTORY_SEPARATOR) {
+	$path = DIRECTORY_SEPARATOR . $path;
+}
+defined("ABSOLUTE_PATH") OR define("ABSOLUTE_PATH", "");
+
+defined('PATH_CSS')               OR define('PATH_CSS', ABSOLUTE_PATH . '/assets/css/');
+defined('PATH_IMG')               OR define('PATH_IMG', ABSOLUTE_PATH . '/assets/images/');
+defined('PATH_JS')                OR define('PATH_JS', ABSOLUTE_PATH . '/assets/js/');
+defined('PATH_PLUGINS')           OR define('PATH_PLUGINS', ABSOLUTE_PATH . '/assets/plugins/');
+defined('PATH_LIBS')              OR define('PATH_LIBS', ABSOLUTE_PATH . '/assets/libs/');
+defined('PATH_FONTS')             OR define('PATH_FONTS', ABSOLUTE_PATH . '/assets/fonts/');

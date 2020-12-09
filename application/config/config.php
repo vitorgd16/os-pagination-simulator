@@ -29,7 +29,7 @@
         $protocol = 'https://';
     }
 
-    $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'] . PATH;
+    $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'] . ABSOLUTE_PATH;
 
 	/*
 	|--------------------------------------------------------------------------
