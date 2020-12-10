@@ -111,7 +111,9 @@ defined("BASEPATH") OR exit("No direct script access allowed");
             <br />
 			<div class="row">
 				<div class="col-md-12">
-					<label for="tam-frame">URL Git: https://github.com/vitorgd16/algoritmos-paginacao-so</label>
+					<div class="centraliza">
+						<label for="tam-frame">URL Git: <a href="https://github.com/vitorgd16/algoritmos-paginacao-so">https://github.com/vitorgd16/algoritmos-paginacao-so</a></label>
+					</div>
 				</div>
 			</div>
 			<br />
