@@ -2,7 +2,7 @@
 Trabalho de S.O., projeto desenvolvido para gerar modelos de paginações de S.O.
 
 # URL Funcional
-
+https://paginacao-so.herokuapp.com/
 
 # Atenção desenvolvedor
 Caso esteja trabalhando com diferentes localizações de root localmente ou utilizando programas como XAMPP, siga as seguintes instruções para que o projeto funcione adequadamente:
