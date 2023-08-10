@@ -15,5 +15,5 @@ http://localhost:8000
 
 # Functional URL
 ```shell
-https://paginacao-so.herokuapp.com/
+https://os-pagination.nobugneverlag.com.br/
 ```
