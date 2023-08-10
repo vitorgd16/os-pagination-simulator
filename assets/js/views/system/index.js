@@ -266,9 +266,8 @@ function runAlgorithm(table) {
                 break;
             case "lifo":
 				/**
-				 * TODO Check algorithm
 				 * The element "lasts" in the array will have a fixed size determined by the desired number of frames.
-				 * The array should always be in order; the first element to enter will be the last to exit.
+				 * The array should always be in order; the last element to enter will be always the the one to be replaced.
 				 * In the event of repetition, do not increment the array, but move its position to be the first element of the array.
 				 * When a page replacement occurs, replace the first element of the array with the new one.
 				 *
