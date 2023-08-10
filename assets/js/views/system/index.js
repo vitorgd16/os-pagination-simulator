@@ -22,7 +22,7 @@ $('button#run_algorithm').on("click", function () {
         $(table).find('tbody').html('');
         $(table).find('tfoot').html('');
     } else {
-        $('#msg-success').html('Sucesso em gerar o algoritmo!');
+        $('#msg-success').html("Success in generating the algorithm's pages!");
         $('#msg-success').fnToggle('block');
         $("#modal_resposta").modal('show');
     }
@@ -39,11 +39,11 @@ function rodarAlgoritmos(table) {
         const manterBrancoRepeticoes = $("input#white_repeat").is(':checked');
         let newCollumns = [], information = [];
 
-        if(isEmptyInteger(frames) || frames <= 0) return "O tamanho do frame deve ser maior que 0!";
-        if(frames >= 37) return "O tamanho do frame ultrapassa o permitido (Max: 36)!";
-        if(pages.length <= 0) return "As páginas à serem alocadas estão vazias!";
-        if(pages.length >= 101) return "A quantidade de páginas ultrapassa o máximo permitido (Max: 100)!";
-        if(isEmpty(algoritmo)) return "O algoritmo não foi definido!";
+        if(isEmptyInteger(frames) || frames <= 0) return "The frame size must be greater than 0!";
+        if(frames >= 37) return "The frame size exceeds the allowed limit (Max: 36)!";
+        if(pages.length <= 0) return "The pages to be allocated are empty!";
+        if(pages.length >= 101) return "The number of pages exceeds the maximum allowed (Max: 100)!";
+        if(isEmpty(algoritmo)) return "The algorithm has not been defined!";
 
         $(table).find('thead').html('<tr></tr>');
         $(table).find('tbody').html('');
@@ -290,7 +290,7 @@ function rodarAlgoritmos(table) {
             }
         }
     } catch (e) {
-        return "Erro desconhecido ao rodar algoritmo!";
+        return "Unknown error when running the algorithm!";
     }
 
     return null;
