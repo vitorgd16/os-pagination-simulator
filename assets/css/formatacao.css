@@ -11,8 +11,7 @@ img.path{
     color: #333333;
 }
 
-.esconder_algoritmo,
-.esconder_opt {
+.hide_element {
     display: none;
 }
 

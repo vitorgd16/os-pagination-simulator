@@ -1,7 +1,11 @@
+/**
+ * Trigger button#run_algorithm
+ * Button trigger to run the selected algorithm
+ */
 $('button#run_algorithm').off("click");
 $('button#run_algorithm').on("click", function () {
-    let erro = null;
-    const table = $('table#table-algoritmo');
+    let error = null;
+    const table = $('table#table-algorithm');
 
     $('.sysloading').fnToggle('block');
     $(this).prop("disabled", true);
@@ -13,9 +17,9 @@ $('button#run_algorithm').on("click", function () {
     $('#msg-error').fnToggle('none');
     $('#msg-success').fnToggle('none');
 
-    erro = rodarAlgoritmos(table);
-    if(!isEmpty(erro)){
-        $('#msg-error').html(erro);
+    error = runAlgorithm(table);
+    if(!isEmpty(error)){
+        $('#msg-error').html(error);
         $('#msg-error').fnToggle('block');
 
         $(table).find('thead').html('');
@@ -24,32 +28,39 @@ $('button#run_algorithm').on("click", function () {
     } else {
         $('#msg-success').html("Success in generating the algorithm's pages!");
         $('#msg-success').fnToggle('block');
-        $("#modal_resposta").modal('show');
+        $("#response_modal").modal('show');
     }
 
     $(this).prop("disabled", false);
     $('.sysloading').fnToggle('none');
 });
 
-function rodarAlgoritmos(table) {
+/**
+ * Function runAlgorithm.
+ * Runs the selected algorithm from those listed on screen and displays the result on screen
+ *
+ * @param table Table selector to update.
+ * @returns {null|string} Returns null if successful or a string containing the error to be displayed.
+ */
+function runAlgorithm(table) {
     try {
         const frames = parseInt($('#num-frames').val());
         const pages = $('#pages').val().split('');
-        const algoritmo = $("input[name='algorithm_type']:checked").val();
-        const manterBrancoRepeticoes = $("input#white_repeat").is(':checked');
+        const algorithm = $("input[name='algorithm_type']:checked").val();
+        const bolWhiteRepeat = $("input#white_repeat").is(':checked');
         let newCollumns = [], information = [];
 
         if(isEmptyInteger(frames) || frames <= 0) return "The frame size must be greater than 0!";
         if(frames >= 37) return "The frame size exceeds the allowed limit (Max: 36)!";
         if(pages.length <= 0) return "The pages to be allocated are empty!";
         if(pages.length >= 101) return "The number of pages exceeds the maximum allowed (Max: 100)!";
-        if(isEmpty(algoritmo)) return "The algorithm has not been defined!";
+        if(isEmpty(algorithm)) return "The algorithm has not been defined!";
 
         $(table).find('thead').html('<tr></tr>');
         $(table).find('tbody').html('');
-        // $(table).find('tfoot').html('<tr><td class="informacoes" colspan="' + (pages.length + 1) + '"></td></tr>');
+        // $(table).find('tfoot').html('<tr><td class="infodata" colspan="' + (pages.length + 1) + '"></td></tr>');
 
-        $($(table).find('thead tr:first')).append("<th class='informacoes'>Frames</th>");
+        $($(table).find('thead tr:first')).append("<th class='infodata'>Frames</th>");
         $.each(pages, function(key, value) {
             $($(table).find('thead tr:first')).append("<th class='child-" + key + "'>" + value + "</th>");
         });
@@ -58,7 +69,7 @@ function rodarAlgoritmos(table) {
             newCollumns[i] = [];
             $($(table).find('tbody')).append(
                 "<tr class='child-" + i + "'>" +
-                "<td class='informacoes'>" + (i + 1) + "</td>" +
+                "<td class='infodata'>" + (i + 1) + "</td>" +
                 "</tr>"
             );
             $.each(pages, function(index) {
@@ -67,21 +78,26 @@ function rodarAlgoritmos(table) {
             });
         }
 
-        switch (algoritmo) {
+        switch (algorithm) {
             case "fifo":
-                //O ARRAY FIRSTS TERÁ UM TAMANHO FIXO DEFINIDO PELO NUMERO DE FRAMES DEFINIDOS
-                //DEIXAR SEMPRE ORDENADO O ARRAY, O PRIMEIRO A ENTRAR SERA O PRIMEIRO ELEMENTO,
-                //EM CASO DE REPETIÇÃO, NÃO INCREMENTAR NO ARRAY E NEM MUDAR A POSIÇÃO
-                //QUANDO HOUVER SUBSTITUIÇÃO DE PÁGINA, SUBSTITUIR O PRIMEIRO ELEMENTO DO ARRAY PELO NOVO E
-                //MUDAR-LO DE POSIÇÃO PARA A ULTIMA POSIÇÃO DO ARRAY
+				/**
+				 * The element "firsts" in the array will have a fixed size determined by the desired number of frames.
+				 * The array should always be in order; the first element to enter will be the first to exit.
+				 * In the event of repetition, do not increment in the array nor change its position.
+				 *
+				 * When a page replacement occurs, replace the first element of the array with the new one and move it
+				 * to the last position of the array.
+				 *
+				 * @type {{indexHasInformation: number, col: number, firsts: *[], orders: *[], repeat: boolean}}
+				 */
                 information = {
                     'indexHasInformation': -1,
                     'col': 0,
                     'firsts': [],
                     'orders': [],
-                    'isRepeticao': false,
+                    'repeat': false,
                 };
-                $($(table).find("thead tr:first th:not(.informacoes)")).each(function (indexTh) {
+                $($(table).find("thead tr:first th:not(.infodata)")).each(function (indexTh) {
                     if(!information['firsts'].includes($(this).text().trim())) {
                         information['orders'].push($(this).text().trim());
                         information['firsts'].push($(this).text().trim());
@@ -90,14 +106,15 @@ function rodarAlgoritmos(table) {
                         }
 
                         if(information['firsts'].length > frames) {
-                            information['orders'][information['orders'].indexOf(information['firsts'].shift())] = information['orders'].pop();
+                            information['orders'][information['orders'].indexOf(information['firsts'].shift())] =
+								information['orders'].pop();
                         }
-                        information['isRepeticao'] = false;
+                        information['repeat'] = false;
                     } else {
-                        information['isRepeticao'] = true;
+                        information['repeat'] = true;
                     }
 
-                    if(!manterBrancoRepeticoes || !information['isRepeticao']){
+                    if(!bolWhiteRepeat || !information['repeat']){
                         for (let lin = information['indexHasInformation']; lin >= 0; lin--) {
                             newCollumns[lin][information['col']] = information['orders'][lin];
                         }
@@ -106,19 +123,24 @@ function rodarAlgoritmos(table) {
                 });
                 break;
             case "lru":
-                //O ARRAY FIRSTS TERÁ UM TAMANHO FIXO DEFINIDO PELO NUMERO DE FRAMES DEFINIDOS
-                //DEIXAR SEMPRE ORDENADO O ARRAY, O PRIMEIRO A ENTRAR SERA O PRIMEIRO ELEMENTO,
-                //EM CASO DE REPETIÇÃO, NÃO INCREMENTAR NO ARRAY, MAS MUDAR A POSIÇÃO
-                //QUANDO HOUVER SUBSTITUIÇÃO DE PÁGINA, SUBSTITUIR O PRIMEIRO ELEMENTO DO ARRAY PELO NOVO E
-                //MUDAR-LO DE POSIÇÃO PARA A ULTIMA POSIÇÃO DO ARRAY
-                information = {
+				/**
+				 * The element "firsts" in the array will have a fixed size determined by the desired number of frames.
+				 * The array should always be in order; the first element to enter will be the first to exit.
+				 * In the event of repetition, do not increment the array, but change its position.
+				 *
+				 * When a page replacement occurs, replace the first element of the array with the new one and move it
+				 * to the last position of the array.
+				 *
+				 * @type {{indexHasInformation: number, col: number, repeat: boolean, firsts: *[], orders: *[]}}
+				 */
+				information = {
                     'indexHasInformation': -1,
                     'col': 0,
                     'firsts': [],
                     'orders': [],
-                    'isRepeticao': false,
+                    'repeat': false,
                 };
-                $($(table).find("thead tr:first th:not(.informacoes)")).each(function (indexTh) {
+                $($(table).find("thead tr:first th:not(.infodata)")).each(function (indexTh) {
                     if(
                         information['indexHasInformation'] < (frames - 1) &&
                         !information['firsts'].includes($(this).text().trim())
@@ -132,21 +154,23 @@ function rodarAlgoritmos(table) {
                         information['orders'].push($(this).text().trim());
                         information['firsts'].push($(this).text().trim());
 
-                        information['isRepeticao'] = false;
+                        information['repeat'] = false;
                     } else if(
                         information['firsts'].includes($(this).text().trim())
                     ) {
                         information['firsts'].push($(this).text().trim());
-                        information['firsts'].splice(information['firsts'].indexOf(information['firsts'][(information['firsts'].length - 1)]), 1);
+                        information['firsts'].splice(information['firsts']
+							.indexOf(information['firsts'][(information['firsts'].length - 1)]), 1);
 
-                        information['isRepeticao'] = true;
+                        information['repeat'] = true;
                     }
 
                     if(information['firsts'].length > frames) {
-                        information['orders'][information['orders'].indexOf(information['firsts'].shift())] = information['orders'].pop();
+                        information['orders'][information['orders'].indexOf(information['firsts'].shift())] =
+							information['orders'].pop();
                     }
 
-                    if(!manterBrancoRepeticoes || !information['isRepeticao']) {
+                    if(!bolWhiteRepeat || !information['repeat']) {
                         for (let lin = information['indexHasInformation']; lin >= 0; lin--) {
                             newCollumns[lin][information['col']] = information['orders'][lin];
                         }
@@ -155,11 +179,18 @@ function rodarAlgoritmos(table) {
                 });
                 break;
             case "opt":
-                //O ARRAY FIRSTS TERÁ UM TAMANHO FIXO DEFINIDO PELO NUMERO DE FRAMES DEFINIDOS
-                //EM CASO DE REPETIÇÃO, NÃO INCREMENTAR NO ARRAY
-                //QUANDO HOUVER SUBSTITUIÇÃO DE PÁGINA, SUBSTITUIR O ELEMENTO QUE IRÁ DEMORAR MAIS PARA SER UTILIZADO NOVAMENTE
-                //SE HOUVER DOIS OU MANIS QUE POSSAM SER SUBSTITUIDOS, OPTAR PELO COM MAIS TEMPO NA MEMÓRIA
-                information = {
+				/**
+				 * The element "firsts" in the array will have a fixed size determined by the desired number of frames.
+				 * In the event of repetition, do not increment the array.
+				 * When a page replacement occurs, replace the element that will take the longest to be used again.
+				 * If there are two or more that could be replaced, choose the one that has been in memory the longest.
+				 *
+				 * @type {{
+				 * 		indexHasInformation: number, col: number, auxFirsts: {}, repeat: boolean, firsts: *[],
+				 * 		spliceAux: number, orders: *[], iSortAux: number, sortAuxFirst: *[]
+				 * }}
+				 */
+				information = {
                     'indexHasInformation': -1,
                     'col': 0,
                     'firsts': [],
@@ -168,9 +199,9 @@ function rodarAlgoritmos(table) {
                     'iSortAux': 0,
                     'sortAuxFirst': [],
                     'spliceAux': -1,
-                    'isRepeticao': false,
+                    'repeat': false,
                 };
-                $($(table).find("thead tr:first th:not(.informacoes)")).each(function (indexTh) {
+                $($(table).find("thead tr:first th:not(.infodata)")).each(function (indexTh) {
                     if(!information['firsts'].includes($(this).text().trim())) {
                         information['orders'].push($(this).text().trim());
                         if(information['indexHasInformation'] < (frames - 1)) {
@@ -216,15 +247,16 @@ function rodarAlgoritmos(table) {
                                 }
                             });
 
-                            information['orders'][information['orders'].indexOf(information['firsts'].splice(information['spliceAux'], 1)[0])] = information['orders'].pop();
+                            information['orders'][information['orders'].indexOf(information['firsts']
+								.splice(information['spliceAux'], 1)[0])] = information['orders'].pop();
                         }
 
-                        information['isRepeticao'] = false;
+                        information['repeat'] = false;
                     } else {
-                        information['isRepeticao'] = true;
+                        information['repeat'] = true;
                     }
 
-                    if(!manterBrancoRepeticoes || !information['isRepeticao']){
+                    if(!bolWhiteRepeat || !information['repeat']){
                         for (let lin = information['indexHasInformation']; lin >= 0; lin--) {
                             newCollumns[lin][information['col']] = information['orders'][lin];
                         }
@@ -233,19 +265,23 @@ function rodarAlgoritmos(table) {
                 });
                 break;
             case "lifo":
-                //O ARRAY LASTS TERÁ UM TAMANHO FIXO DEFINIDO PELO NUMERO DE FRAMES DEFINIDOS
-                //DEIXAR SEMPRE ORDENADO O ARRAY, O PRIMEIRO A ENTRAR SERA O ULTIMO ELEMENTO,
-                //EM CASO DE REPETIÇÃO, NÃO INCREMENTAR NO ARRAY MAS MUDAR A POSIÇÃO PARA O PRIMEIRO ELEMENTO
-                //QUANDO HOUVER SUBSTITUIÇÃO DE PÁGINA, SUBSTITUIR O PRIMEIRO ELEMENTO DO ARRAY PELO NOVO
-                information = {
+				/**
+				 * The element "lasts" in the array will have a fixed size determined by the desired number of frames.
+				 * The array should always be in order; the first element to enter will be the last to exit.
+				 * In the event of repetition, do not increment the array, but move its position to be the first element of the array.
+				 * When a page replacement occurs, replace the first element of the array with the new one.
+				 *
+				 * @type {{indexHasInformation: number, col: number, lasts: *[], aux: null, repeat: boolean, orders: *[]}}
+				 */
+				information = {
                     'indexHasInformation': -1,
                     'col': 0,
                     'lasts': [],
                     'orders': [],
                     'aux': null,
-                    'isRepeticao': false,
+                    'repeat': false,
                 };
-                $($(table).find("thead tr:first th:not(.informacoes)")).each(function (indexTh) {
+                $($(table).find("thead tr:first th:not(.infodata)")).each(function (indexTh) {
                     if(
                         information['indexHasInformation'] < (frames - 1) &&
                         !information['lasts'].includes($(this).text().trim())
@@ -259,14 +295,14 @@ function rodarAlgoritmos(table) {
                         information['orders'].push($(this).text().trim());
                         information['lasts'].unshift($(this).text().trim());
 
-                        information['isRepeticao'] = false;
+                        information['repeat'] = false;
                     } else if(
                         information['lasts'].includes($(this).text().trim())
                     ) {
                         information['lasts'].splice(information['lasts'].indexOf($(this).text().trim()), 1);
                         information['lasts'].unshift($(this).text().trim());
 
-                        information['isRepeticao'] = true;
+                        information['repeat'] = true;
                     }
 
                     if(information['lasts'].length > frames) {
@@ -274,7 +310,7 @@ function rodarAlgoritmos(table) {
                         information['orders'][information['orders'].indexOf(information['aux'])] = information['lasts'][0];
                     }
 
-                    if(!manterBrancoRepeticoes || !information['isRepeticao']) {
+                    if(!bolWhiteRepeat || !information['repeat']) {
                         for (let lin = information['indexHasInformation']; lin >= 0; lin--) {
                             newCollumns[lin][information['col']] = information['orders'][lin];
                         }
@@ -296,10 +332,10 @@ function rodarAlgoritmos(table) {
     return null;
 }
 
-//Teclas especiais para caso seja necessário criar algoritmos escondidos em tela ou opções secretas
+/**
+ * Trigger CTRL+O
+ * Trigger for special commands in case it is necessary to create hidden algorithms on screen or secret options.
+ */
 $(document).hotKey({ key: 'o', modifier: 'ctrl' }, function () {
-    $('.esconder_opt').fnToggle();
-});
-$(document).hotKey({ key: 'a', modifier: 'ctrl' }, function () {
-    $('.esconder_algoritmo').fnToggle();
+    $('.hide_element').fnToggle();
 });

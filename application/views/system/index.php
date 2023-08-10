@@ -66,7 +66,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
     </div>
 
     <div class="main">
-        <div class="modal fade" id="modal_resposta" tabindex="-1" role="dialog">
+        <div class="modal fade" id="response_modal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header justify-content-center">
@@ -77,7 +77,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
                     </div>
                     <div class="modal-body">
                         <div class="table-responsive" style="max-height: 400px">
-                            <table id="table-algoritmo" class="table thead-dark tfoot-dark tbody-white tbody-info-dark">
+                            <table id="table-algorithm" class="table thead-dark tfoot-dark tbody-white tbody-info-dark">
                                 <thead></thead>
                                 <tbody></tbody>
                                 <tfoot></tfoot>
