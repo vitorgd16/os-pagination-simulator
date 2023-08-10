@@ -1,56 +1,56 @@
-$('button#rodar_algoritmo').off("click");
-$('button#rodar_algoritmo').on("click", function () {
+$('button#run_algorithm').off("click");
+$('button#run_algorithm').on("click", function () {
     let erro = null;
     const table = $('table#table-algoritmo');
 
-    $('.loading_sistema').fnToggle('block');
+    $('.sysloading').fnToggle('block');
     $(this).prop("disabled", true);
 
     $(table).find('thead').html('');
     $(table).find('tbody').html('');
     $(table).find('tfoot').html('');
 
-    $('#msg-erro').fnToggle('none');
-    $('#msg-sucesso').fnToggle('none');
+    $('#msg-error').fnToggle('none');
+    $('#msg-success').fnToggle('none');
 
     erro = rodarAlgoritmos(table);
     if(!isEmpty(erro)){
-        $('#msg-erro').html(erro);
-        $('#msg-erro').fnToggle('block');
+        $('#msg-error').html(erro);
+        $('#msg-error').fnToggle('block');
 
         $(table).find('thead').html('');
         $(table).find('tbody').html('');
         $(table).find('tfoot').html('');
     } else {
-        $('#msg-sucesso').html('Sucesso em gerar o algoritmo!');
-        $('#msg-sucesso').fnToggle('block');
+        $('#msg-success').html('Sucesso em gerar o algoritmo!');
+        $('#msg-success').fnToggle('block');
         $("#modal_resposta").modal('show');
     }
 
     $(this).prop("disabled", false);
-    $('.loading_sistema').fnToggle('none');
+    $('.sysloading').fnToggle('none');
 });
 
 function rodarAlgoritmos(table) {
     try {
-        const frames = parseInt($('#tam-frame').val());
-        const paginas = $('#paginas').val().split('');
-        const algoritmo = $("input[name='tipo_algoritmo']:checked").val();
-        const manterBrancoRepeticoes = $("input#branco_repeticao").is(':checked');
+        const frames = parseInt($('#num-frames').val());
+        const pages = $('#pages').val().split('');
+        const algoritmo = $("input[name='algorithm_type']:checked").val();
+        const manterBrancoRepeticoes = $("input#white_repeat").is(':checked');
         let newCollumns = [], information = [];
 
         if(isEmptyInteger(frames) || frames <= 0) return "O tamanho do frame deve ser maior que 0!";
         if(frames >= 37) return "O tamanho do frame ultrapassa o permitido (Max: 36)!";
-        if(paginas.length <= 0) return "As páginas à serem alocadas estão vazias!";
-        if(paginas.length >= 101) return "A quantidade de páginas ultrapassa o máximo permitido (Max: 100)!";
+        if(pages.length <= 0) return "As páginas à serem alocadas estão vazias!";
+        if(pages.length >= 101) return "A quantidade de páginas ultrapassa o máximo permitido (Max: 100)!";
         if(isEmpty(algoritmo)) return "O algoritmo não foi definido!";
 
         $(table).find('thead').html('<tr></tr>');
         $(table).find('tbody').html('');
-        // $(table).find('tfoot').html('<tr><td class="informacoes" colspan="' + (paginas.length + 1) + '"></td></tr>');
+        // $(table).find('tfoot').html('<tr><td class="informacoes" colspan="' + (pages.length + 1) + '"></td></tr>');
 
         $($(table).find('thead tr:first')).append("<th class='informacoes'>Frames</th>");
-        $.each(paginas, function(key, value) {
+        $.each(pages, function(key, value) {
             $($(table).find('thead tr:first')).append("<th class='child-" + key + "'>" + value + "</th>");
         });
 
@@ -61,7 +61,7 @@ function rodarAlgoritmos(table) {
                 "<td class='informacoes'>" + (i + 1) + "</td>" +
                 "</tr>"
             );
-            $.each(paginas, function(index) {
+            $.each(pages, function(index) {
                 newCollumns[i][index] = '-';
                 $($(table).find('tbody tr:last')).append("<td class='child-" + index + "'></td>");
             });
@@ -154,7 +154,7 @@ function rodarAlgoritmos(table) {
                     information['col']++;
                 });
                 break;
-            case "otimo":
+            case "opt":
                 //O ARRAY FIRSTS TERÁ UM TAMANHO FIXO DEFINIDO PELO NUMERO DE FRAMES DEFINIDOS
                 //EM CASO DE REPETIÇÃO, NÃO INCREMENTAR NO ARRAY
                 //QUANDO HOUVER SUBSTITUIÇÃO DE PÁGINA, SUBSTITUIR O ELEMENTO QUE IRÁ DEMORAR MAIS PARA SER UTILIZADO NOVAMENTE
@@ -182,7 +182,7 @@ function rodarAlgoritmos(table) {
                             information['auxFirsts'][valueFirst.toString()] = -1;
                         });
                         $.each(information['firsts'], function (indexFirst, valueFirst) {
-                            $.each(paginas, function(indexPag, valuePag) {
+                            $.each(pages, function(indexPag, valuePag) {
                                 if(indexPag <= information['col']) return;
 
                                 if(

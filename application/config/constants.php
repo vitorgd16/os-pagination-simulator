@@ -101,7 +101,6 @@ defined('CONFIG_PATH')            OR define('CONFIG_PATH', APPPATH . '/config/')
 defined('THIRDPARTY_PATH')        OR define('THIRDPARTY_PATH', APPPATH . '/third_party/');
 
 defined('CODE_SEP')               OR define('CODE_SEP', '...@@*!)(W{}!!__(SEPARATOR_CODE)__@@*!)(W{}!!...');
-defined('NOME_EMPRESA')           OR define('NOME_EMPRESA', "Projeto de Paginação");
 
 if(file_exists(CONFIG_PATH . 'constantsPath.php')) {
 	include_once CONFIG_PATH . 'constantsPath.php';

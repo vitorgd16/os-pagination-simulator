@@ -14,6 +14,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </style>
 </head>
 <body>
-DEU PAU 2
+Page not found.
 </body>
 </html>

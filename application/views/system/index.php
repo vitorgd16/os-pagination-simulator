@@ -6,7 +6,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 <html lang="pt-br">
 <head>
     <noscript>
-        <meta http-equiv="Refresh" content="0; url=<?= site_url("Erro/getError/505"); ?>">
+        <meta http-equiv="Refresh" content="0; url=https://www.google.com/search?client=opera-gx&q=how+to+enable+javascript+browser">
     </noscript>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -14,9 +14,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 
     <title>
         <?php
-        $novoTitulo = NOME_EMPRESA;
-        $novoTitulo .= isset($title) ? (" - " . $title) : "";
-        echo $novoTitulo;
+        	echo (!empty($title) ? $title : "[NO TITLE]");
         ?>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -57,16 +55,12 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 <!-- BEGIN BODY -->
 <body class="index-page">
 <div class="wrapper">
-
-    <div class="variaveis" data-path_img="<?= PATH_IMG; ?>">
-    </div>
-
-    <div class="loading_sistema">
-        <div class="centraliza-vertical">
+    <div class="sysloading">
+        <div class="center_content-vertical">
             <img alt="" src="<?= PATH_IMG . 'loading.gif' ?>" />
             <br/>
-            <div class="texto-loading">
-                Carregando...
+            <div class="loading_text">
+                Loading...
             </div>
         </div>
     </div>
@@ -79,7 +73,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="tim-icons icon-simple-remove"></i>
                         </button>
-                        <h4 class="title title-up">Resultado</h4>
+                        <h4 class="title title-up">Result</h4>
                     </div>
                     <div class="modal-body">
                         <div class="table-responsive" style="max-height: 400px">
@@ -104,15 +98,15 @@ defined("BASEPATH") OR exit("No direct script access allowed");
             <br />
             <div class="row">
                 <div class="col-12">
-                    <div class="alert alert-danger" id="msg-erro" role="alert" style="display: none;"></div>
-                    <div class="alert alert-success" id="msg-sucesso" role="alert" style="display: none;"></div>
+                    <div class="alert alert-danger" id="msg-error" role="alert" style="display: none;"></div>
+                    <div class="alert alert-success" id="msg-success" role="alert" style="display: none;"></div>
                 </div>
             </div>
             <br />
 			<div class="row">
 				<div class="col-md-12">
-					<div class="centraliza">
-						<label for="tam-frame">URL Git: <a href="https://github.com/vitorgd16/algoritmos-paginacao-so">https://github.com/vitorgd16/algoritmos-paginacao-so</a></label>
+					<div class="center_content">
+						<label>Project URL on GitHUB: <a href="https://github.com/vitorgd16/algoritmos-paginacao-so">https://github.com/vitorgd16/algoritmos-paginacao-so</a></label>
 					</div>
 				</div>
 			</div>
@@ -120,40 +114,40 @@ defined("BASEPATH") OR exit("No direct script access allowed");
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="tam-frame">Número de Frames para realizar a paginação</label>
-                        <input type="text" class="form-control" id="tam-frame" name="tam-frame" data-mask="numero"
+                        <label for="num-frames">O.S. - Number of Frames (Example: 10)</label>
+                        <input type="text" class="form-control" id="num-frames" name="num-frames" data-mask="number"
                                data-dec_places="0" data-prefixo="" data-sufixo=""
                                data-thous_sep="" data-dec_sep="," data-allow_neg="0" />
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="paginas">Páginas à serem alocadas</label>
-                        <input type="text" class="form-control" id="paginas" name="paginas" data-mask="numeros_e_letras" />
+                        <label for="pages">O.S. - Pages for Allocation (Numbers and Letters permitted)</label>
+                        <input type="text" class="form-control" id="pages" name="pages" data-mask="number_letters" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <label>Configurações Especiais</label>
+                    <label>Special Settings</label>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" id="branco_repeticao" />
+                            <input class="form-check-input" type="checkbox" id="white_repeat" />
                             <span class="form-check-sign"></span>
-                            Quadros brancos em repetições de página
-                        </label>
+							Display white frames in page repetitions
+						</label>
                     </div>
                 </div>
                 <div class="d-lg-none">
                     <br />
-                    <div class="linha"></div>
+                    <div class="my_line"></div>
                     <br />
                 </div>
                 <div class="col-lg-6">
-                    <label>Escolha o algoritmo a ser utilizado</label>
+                    <label>Choose the algorithm to be used</label>
                     <div class="form-check form-check-radio">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="tipo_algoritmo" id="tipo_fifo"
+                            <input class="form-check-input" type="radio" name="algorithm_type" id="fifo_type"
                                    value="fifo" />
                             <span class="form-check-sign"></span>
                             FIFO
@@ -161,7 +155,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
                     </div>
                     <div class="form-check form-check-radio">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="tipo_algoritmo" id="tipo_lru"
+                            <input class="form-check-input" type="radio" name="algorithm_type" id="lru_type"
                                    value="lru" />
                             <span class="form-check-sign"></span>
                             LRU
@@ -169,15 +163,15 @@ defined("BASEPATH") OR exit("No direct script access allowed");
                     </div>
                     <div class="form-check form-check-radio">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="tipo_algoritmo" id="tipo_otimo"
-                                   value="otimo" />
+                            <input class="form-check-input" type="radio" name="algorithm_type" id="opt_type"
+                                   value="opt" />
                             <span class="form-check-sign"></span>
-                            Ótimo
-                        </label>
+							OPT
+						</label>
                     </div>
                     <div class="form-check form-check-radio">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="tipo_algoritmo" id="tipo_lifo"
+                            <input class="form-check-input" type="radio" name="algorithm_type" id="lifo_type"
                                    value="lifo" />
                             <span class="form-check-sign"></span>
                             LIFO
@@ -189,9 +183,9 @@ defined("BASEPATH") OR exit("No direct script access allowed");
             <br />
             <div class="row">
                 <div class="col-12">
-                    <div class="centraliza">
-                        <button type="button" id="rodar_algoritmo" class="btn btn-success">
-                            Rodar algoritmo!
+                    <div class="center_content">
+                        <button type="button" id="run_algorithm" class="btn btn-success">
+                            Run Algorithm!
                         </button>
                     </div>
                 </div>
@@ -200,10 +194,10 @@ defined("BASEPATH") OR exit("No direct script access allowed");
     </div>
 </div>
 
-<script src="<?= PATH_JS . "views/principal/index.js" . VERSION_EXT; ?>" type="text/javascript"></script>
+<script src="<?= PATH_JS . "views/system/index.js" . VERSION_EXT; ?>" type="text/javascript"></script>
 
 <!-- CORE TEMPLATE JS - START -->
-<script src="<?= PATH_JS . "funcoes.js" . VERSION_EXT; ?>" type="text/javascript"></script>
+<script src="<?= PATH_JS . "sysfunctions.js" . VERSION_EXT; ?>" type="text/javascript"></script>
 <!-- CORE TEMPLATE JS - END -->
 </body>
 </html>

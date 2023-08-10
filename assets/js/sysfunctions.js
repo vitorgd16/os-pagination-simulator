@@ -1,49 +1,94 @@
-//Variaveis do sistema
-let configs = {
-    constantes: {
-        lang: 'pt-BR',
-    }
-};
-moment.locale(configs.constantes.lang);
-
-//Fazemos com que o loading pare de aparecer
+//Forces the loading to disappear from the screen.
 $('document').ready(function(){
-    $('.loading_sistema').fnToggle("none");
+    $('.sysloading').fnToggle("none");
 });
 
-//Funções para testar vazio
+/**
+ * Function isArray
+ * Determina se uma variavel é um array
+ * @param obj Variavel para ser testada
+ * @returns {boolean}
+ *
+ * @ref https://stackoverflow.com/questions/4775722/how-to-check-if-an-object-is-an-array
+ */
+function isArray(obj) {
+	if(obj === null) return false;
+	return (typeof obj).toLowerCase() === "object";
+}
+
+/**
+ * Function isZero.
+ * Testa se uma variavel está zerada
+ *
+ * @param {*} str variavel para testar
+ * @returns {boolean}
+ */
+function isZero(str) {
+	try{
+		str *= 1;
+		if(str === 0) {
+			return true;
+		}
+	} catch (e) {}
+
+	return false;
+}
+
 /**
  * Function isEmpty.
  * Testa se uma variavel é vazia, testando todos os possiveis casos
- * @param str mixed variavel para testar
+ *
+ * @param {*} str variavel para testar
  * @returns {boolean}
  */
 function isEmpty(str) {
-    return str === null ||
-        str === '' ||
-        (
-            Array.isArray(str) &&
-            str.length <= 0
-        ) ||
-        str === false ||
-        str === undefined ||
-        str.toString() === "0"
+	if(
+		str === null ||
+		str === false ||
+		str === undefined || (
+			isArray(str) &&
+			str.length === 0
+		)
+	) {
+		return true;
+	} else if(isArray(str) && str.length > 0){
+		return false;
+	}
+
+	try{
+		str = str.toString().trim().toLowerCase();
+		if(
+			str === "" || str === "false" ||
+			str === "null" || str === "undefined" ||
+			str === "nan"
+		) {
+			return true;
+		}
+	} catch (e) {}
+
+	return isZero(str);
 }
 
 /**
  * Function isEmptyDecimal.
  * Testa se uma variavel é vazia, ou vazia como float, testando todos os possiveis casos
- * @param str mixed variavel para testar
+ *
+ * @param {*} str variavel para testar
  * @returns {boolean}
  */
 function isEmptyDecimal(str) {
+	try{
+		return isEmpty(parseFloat(str));
+	}catch(e){}
+
 	return isEmpty(str);
 }
 
 /**
- * Function isEmptyDecimal.
+ * Function isEmptyInteger.
  * Testa se uma variavel é vazia, ou vazia como integer, testando todos os possiveis casos
- * @param str mixed variavel para testar
+ *
+ * @param {*} str variavel para testar
  * @returns {boolean}
  */
 function isEmptyInteger(str) {
@@ -54,7 +99,6 @@ function isEmptyInteger(str) {
 	return isEmpty(str);
 }
 
-//Funções para formatações
 /**
  * Function number_format.
  * Formata um decimal em JS equivalente ao number_format do PHP
@@ -63,8 +107,8 @@ function isEmptyInteger(str) {
  * @param dec_point mixed:     Separador de milhar
  * @param thousands_sep mixed: Separador de decimais
  *
- * https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
- * http://jsfiddle.net/drewnoakes/xc3qh35z/
+ * @ref https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+ * @ref http://jsfiddle.net/drewnoakes/xc3qh35z/
  */
 function number_format(number, decimals, dec_point, thousands_sep) {
     if(isEmptyDecimal(number)) return "0";
@@ -95,8 +139,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
  * @param str String para deixar apenas numeros
  * @return string
  *
- * https://stackoverflow.com/questions/185510/how-can-i-concatenate-regex-literals-in-javascript
- * https://stackoverflow.com/questions/4460595/jquery-filter-numbers-of-a-string
+ * @ref https://stackoverflow.com/questions/185510/how-can-i-concatenate-regex-literals-in-javascript
+ * @ref https://stackoverflow.com/questions/4460595/jquery-filter-numbers-of-a-string
  */
 function apenasNumeros(str) {
     if(str === undefined || str === null) return "";
@@ -442,17 +486,16 @@ $.fn.extend({
     }
 });
 
-//Funções de controle
 /**
  * Function ativaFuncoesGerais.
  * Realiza a ativação de funções de mascaras e transformações do portal
  */
 function ativaFuncoesGerais() {
-    recreateObject($("input[data-mask='numero']"));
-    $("input[data-mask='numero']").fnMaskNumero();
+    recreateObject($("input[data-mask='number']"));
+    $("input[data-mask='number']").fnMaskNumero();
 
-    $("input[data-mask='numeros_e_letras']").off('input');
-    $("input[data-mask='numeros_e_letras']").on('input', function () {
+    $("input[data-mask='number_letters']").off('input');
+    $("input[data-mask='number_letters']").on('input', function () {
         $(this).val(apenasNumerosLetras($(this).val()));
     });
 }

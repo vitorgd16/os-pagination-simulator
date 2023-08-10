@@ -1,58 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class MY_Controller.
+ * Responsible for the core of the system's Controllers.
+ */
 class MY_Controller extends CI_Controller {
-
+	/**
+	 * Class Constructor
+	 * Performs the necessary initializations of the core.
+	 */
     public function __construct() {
         parent::__construct();
 
-        defined("VERSION_EXT") OR define("VERSION_EXT", dataAgoraFormatada("?Y-m"));
+        defined("VERSION_EXT") OR define("VERSION_EXT", (dateNow("?Y-m") ?? ""));
         $this->load->model('MY_Model');
     }
-
-    //ERROS
-    public function erro401(){
-        $btn = $this->buttonNameError();
-        $this->load->view(
-            "errors/html/error_404", array (
-                'heading'      => '401',
-                'shortMessage' => 'Não Autorizado',
-                'message'      => 'Autorização não encontrada.',
-                'btn'          => $btn
-            )
-        );
-        exit(0);
-    }
-
-    public function erro404(){
-        $btn = $this->buttonNameError();
-        $this->load->view(
-            "errors/html/error_404", array (
-                'heading'      => '404',
-                'shortMessage' => 'Página Não Encontrada',
-                'message'      => 'A página requisitada não existe.',
-                'btn'          => $btn
-            )
-        );
-        exit(0);
-    }
-
-    public function erro505(){
-        $btn = $this->buttonNameError();
-        $this->load->view(
-            "errors/html/error_404", array (
-                'heading'      => '505',
-                'shortMessage' => 'Versão JS Não Encontrada',
-                'message'      => 'O JS pode estar desativado em seu navegador.',
-                'btn'          => $btn
-            )
-        );
-        exit(0);
-    }
-
-    private function buttonNameError(){
-        if(!empty($this->data['idUsuario'])) return 'Página inicial';
-        return 'Login';
-    }
-    //ERROS
 }

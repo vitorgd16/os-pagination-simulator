@@ -7,7 +7,7 @@ img.path{
     height: 100% !important;
 }
 
-#rodar_algoritmo{
+#run_algorithm{
     color: #333333;
 }
 
@@ -38,7 +38,7 @@ table.tbody-white tbody tr td{
     max-width: 95% !important;
 }
 
-.linha {
+.my_line {
     background-color: #343a40;
     height: 1px;
     width: 100%;
@@ -48,14 +48,14 @@ table.tbody-white tbody tr td{
     display: none !important;
 }
 
-.centraliza{
+.center_content{
     position: relative !important;
     width: 100%;
     text-align: center;
     margin: 0 auto !important;
 }
 
-.loading_sistema {
+.sysloading {
     display: block;
     position: fixed;
     z-index: 9999;
@@ -68,18 +68,18 @@ table.tbody-white tbody tr td{
     margin: 0 auto;
 }
 
-.loading_sistema br {
+.sysloading br {
     clear: both;
 }
 
-.loading_sistema img {
+.sysloading img {
     clear: both;
     width: 150px;
     height: 150px;
     margin-bottom: 20px;
 }
 
-.centraliza-vertical{
+.center_content-vertical{
     position: relative;
     top: 50%;
     transform: translateY(-50%);
