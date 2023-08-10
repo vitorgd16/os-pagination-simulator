@@ -106,7 +106,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 			<div class="row">
 				<div class="col-md-12">
 					<div class="center_content">
-						<label>Project URL on GitHUB: <a href="https://github.com/vitorgd16/algoritmos-paginacao-so">https://github.com/vitorgd16/algoritmos-paginacao-so</a></label>
+						<label>Project URL on GitHUB: <a href="https://github.com/vitorgd16/os-pagination-simulator">https://github.com/vitorgd16/os-pagination-simulator</a></label>
 					</div>
 				</div>
 			</div>
