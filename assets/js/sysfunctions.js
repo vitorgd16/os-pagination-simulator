@@ -5,8 +5,8 @@ $('document').ready(function(){
 
 /**
  * Function isArray
- * Determina se uma variavel é um array
- * @param obj Variavel para ser testada
+ * Determines if a variable is an array
+ * @param obj Variable to be checked
  * @returns {boolean}
  *
  * @ref https://stackoverflow.com/questions/4775722/how-to-check-if-an-object-is-an-array
@@ -18,9 +18,9 @@ function isArray(obj) {
 
 /**
  * Function isZero.
- * Testa se uma variavel está zerada
+ * Checks if a variable has a zero value
  *
- * @param {*} str variavel para testar
+ * @param {*} str Variable to be checked
  * @returns {boolean}
  */
 function isZero(str) {
@@ -36,9 +36,9 @@ function isZero(str) {
 
 /**
  * Function isEmpty.
- * Testa se uma variavel é vazia, testando todos os possiveis casos
+ * Checks if a variable is empty in all possible cases
  *
- * @param {*} str variavel para testar
+ * @param {*} str Variable to be checked
  * @returns {boolean}
  */
 function isEmpty(str) {
@@ -71,9 +71,9 @@ function isEmpty(str) {
 
 /**
  * Function isEmptyDecimal.
- * Testa se uma variavel é vazia, ou vazia como float, testando todos os possiveis casos
+ * Checks if a variable is an empty decimal value
  *
- * @param {*} str variavel para testar
+ * @param {*} str Variable to be checked
  * @returns {boolean}
  */
 function isEmptyDecimal(str) {
@@ -86,9 +86,9 @@ function isEmptyDecimal(str) {
 
 /**
  * Function isEmptyInteger.
- * Testa se uma variavel é vazia, ou vazia como integer, testando todos os possiveis casos
+ * Checks if a variable is an empty integer value
  *
- * @param {*} str variavel para testar
+ * @param {*} str Variable to be checked
  * @returns {boolean}
  */
 function isEmptyInteger(str) {
@@ -101,11 +101,11 @@ function isEmptyInteger(str) {
 
 /**
  * Function number_format.
- * Formata um decimal em JS equivalente ao number_format do PHP
- * @param number integer:      Numero para ser formatado
- * @param decimals integer:    Numero de casas decimais permitidas
- * @param dec_point mixed:     Separador de milhar
- * @param thousands_sep mixed: Separador de decimais
+ * Formats a decimal in JS equivalent to PHP's number_format
+ * @param number integer:      Number to be formatted
+ * @param decimals integer:    Number of allowed decimal places
+ * @param dec_point mixed:     Decimal separator
+ * @param thousands_sep mixed: Thousand separator
  *
  * @ref https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
  * @ref http://jsfiddle.net/drewnoakes/xc3qh35z/
@@ -134,38 +134,42 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 /**
- * Function apenasNumeros
- * Retorna apenas os numeros de uma string
- * @param str String para deixar apenas numeros
+ * Function onlyNumbers
+ * Returns only the numbers from a string
+ *
+ * @param str Auxiliary string to be checked
  * @return string
  *
  * @ref https://stackoverflow.com/questions/185510/how-can-i-concatenate-regex-literals-in-javascript
  * @ref https://stackoverflow.com/questions/4460595/jquery-filter-numbers-of-a-string
  */
-function apenasNumeros(str) {
+function onlyNumbers(str) {
     if(str === undefined || str === null) return "";
     return str.toString().replace(/[^0-9]/g, '').toString();
 }
 
 /**
- * Function apenasNumerosLetras
- * Retorna apenas os numeros e letras de uma string
+ * Function onlyNumbersLetters
+ * Returns only the numbers and letters from a string.
+ *
  * @param str String para deixar apenas numeros e letras
  * @return string
  */
-function apenasNumerosLetras(str) {
+function onlyNumbersLetters(str) {
     if(str === undefined || str === null) return "";
     return str.toString().toUpperCase().replace(/[^0-9A-Z]/g, '').toString();
 }
 
 /**
- * Function removerTodosCharExceto.
- * Remoe todos caracteres da string que não estiverem nos chars enviados
- * @param str String para remoção dos caracteres
- * @param chs Caracters para ignorar
+ * Function removeChrsExcept.
+ * Removes all characters from the string that are not in the provided chars
+ *
+ * @param str String for character removal
+ * @param chs Chars to ignore
+ *
  * @returns {string}
  */
-function removerTodosCharExceto(str, chs) {
+function removeChrsExcept(str, chs) {
     if (isEmpty(chs)) return str;
     if (isEmpty(str)) return "";
     str = str.toString();
@@ -189,13 +193,15 @@ function removerTodosCharExceto(str, chs) {
 }
 
 /**
- * Function removerSeguintesChars.
- * Remove todos caracteres da string que estiverem nos chars enviados
- * @param str String para remoção dos caracteres
- * @param chs Caracters para remover
+ * Function removeChrs.
+ * Removes all characters from the string that are in the provided chars
+ *
+ * @param str String for character removal
+ * @param chs Chars to remove
+ *
  * @returns {string}
  */
-function removerSeguintesChars(str, chs) {
+function removeChrs(str, chs) {
     if (isEmpty(chs)) return str;
     if (isEmpty(str)) return "";
     str = str.toString();
@@ -209,89 +215,95 @@ function removerSeguintesChars(str, chs) {
 }
 
 /**
- * Function hasChar.
- * Diz se há uma palavra em uma string
- * @param str         String para realizar o search
- * @param find        String para encontrar no primeiro parametro
+ * Function hasStr.
+ * Determines if there is a string within the string
+ *
+ * @param str String to conduct the search
+ * @param find String to find in the first parameter
+ *
  * @returns {boolean}
  */
-function hasChar(str, find){
+function hasStr(str, find){
     return str.toString().indexOf(find) !== -1;
 }
 
 /**
- * Function isNegativo.
- * Testa se existe o caracter de numero negativo
- * @param $str string String para testar se existe o simbolo de negativo
+ * Function isNegative.
+ * Checks for the negative number character
+ *
+ * @param $str String to test for the presence of the negative symbol
  * @return boolean
  */
-function isNegativo ($str) {
+function isNegative ($str) {
     if(isEmpty($str)) return false;
     return /(-)/g.test($str);
 }
 
 /**
  * Function formataFloat.
- * Formata um número para o padrão desejado
- * @param num string Numero para ser formatado
- * @param divisorNum string Divisor de casas decimais do numero
- * @param casasDecimais int Numero de casas decimais permitidas depois da virgula
- * @param divisorRetorno string Divisor de casas decimais ao retornar o valor
- * @param prefixoNum string Prefixo do numero (Ex: R$)
- * @param sufixoNum string Sufixo do numero (Ex: %)
- * @param canNegativos bool Define se o numero pode ser negativo ou não
- * @param apenasInteiro bool Define se o retorno deve ser apenas inteiro ou não
- * @param pontoMilhar string Define Define se terá ou não um ponto de milhar
+ * Formats a number to the desired standard
+ *
+ * @param num string Number to be formatted
+ * @param decimalSepNum string Decimal separator for number to be formatted
+ * @param decimalPlaces int Number of allowed decimal places after the decimal point
+ * @param decimalSep string Decimal place divider when returning the value.
+ * @param prefix string Number Prefix (Ex: $)
+ * @param suffix string Number Suffix (Ex: %)
+ * @param negativeAllowed bool Determines if the number can be negative or not
+ * @param onlyInteger bool Determines if the return should be integer only or not
+ * @param thousandSep string Determines whether or not there will be a thousand separator
  * @return string
  */
 function formataFloat (
-	num, divisorNum, casasDecimais, divisorRetorno,
-	prefixoNum, sufixoNum, canNegativos, apenasInteiro, pontoMilhar
+	num, decimalSepNum, decimalPlaces, decimalSep,
+	prefix, suffix, negativeAllowed, onlyInteger, thousandSep
 ) {
     let ret = "";
 
-    divisorNum = removerSeguintesChars(divisorNum, '0123456789+-' + prefixoNum + sufixoNum);
-    if (isEmpty(divisorNum)) divisorNum = '.';
-    divisorRetorno = removerSeguintesChars(divisorRetorno, '0123456789+-' + prefixoNum + sufixoNum);
-    if (isEmpty(divisorRetorno)) divisorRetorno = '.';
-    pontoMilhar = removerSeguintesChars(pontoMilhar, '0123456789+-' + prefixoNum + sufixoNum);
-    if (isEmpty(pontoMilhar) || pontoMilhar === divisorRetorno) pontoMilhar = "";
-    if (isEmptyDecimal(casasDecimais)) casasDecimais = 0;
-    if (isEmpty(prefixoNum)) prefixoNum = "";
-    if (isEmpty(sufixoNum)) sufixoNum = "";
-    if (isEmpty(num)) num = "0";
-    canNegativos = !isEmpty(canNegativos);
-    apenasInteiro = !isEmpty(apenasInteiro);
+	if (isEmpty(num)) num = "0";
+	if (isEmpty(prefix)) prefix = "";
+	if (isEmpty(suffix)) suffix = "";
+	if (isEmptyDecimal(decimalPlaces)) decimalPlaces = 0;
+	negativeAllowed = !isEmpty(negativeAllowed);
+	onlyInteger = !isEmpty(onlyInteger);
 
-    divisorNum = divisorNum.toString();
-    divisorRetorno = divisorRetorno.toString();
-    pontoMilhar = pontoMilhar.toString();
-    prefixoNum = prefixoNum.toString();
-    sufixoNum = sufixoNum.toString();
-    num = num.toString().split(divisorNum);
+	decimalSepNum = removeChrs(decimalSepNum, '0123456789+-' + prefix + suffix);
+    if (isEmpty(decimalSepNum)) decimalSepNum = '.';
+	decimalSep = removeChrs(decimalSep, '0123456789+-' + prefix + suffix);
+    if (isEmpty(decimalSep)) decimalSep = '.';
+	thousandSep = removeChrs(thousandSep, '0123456789+-' + prefix + suffix);
+    if (isEmpty(thousandSep) || thousandSep === decimalSep) thousandSep = "";
 
-    if(isNegativo(num[0]) && canNegativos) ret += '-';
-    num[0] = apenasNumeros(num[0]);
+	decimalSepNum = decimalSepNum.toString();
+	decimalSep = decimalSep.toString();
+	thousandSep = thousandSep.toString();
+	prefix = prefix.toString();
+	suffix = suffix.toString();
+    num = num.toString().split(decimalSepNum);
+
+    if(isNegative(num[0]) && negativeAllowed) ret += '-';
+    num[0] = onlyNumbers(num[0]);
     ret += num[0];
 
-    if (num.length > 1 && !apenasInteiro) {
-        num[1] = apenasNumeros(num[1]);
+    if (num.length > 1 && !onlyInteger) {
+        num[1] = onlyNumbers(num[1]);
         ret +=
-            (isEmpty(pontoMilhar) ? divisorRetorno : '.') +
-            num[1].toString().substr(0, casasDecimais);
+            (isEmpty(thousandSep) ? decimalSep : '.') +
+            num[1].toString().substring(0, decimalPlaces);
     }
 
-    if(!isEmpty(pontoMilhar)) ret = number_format(ret, casasDecimais, divisorRetorno, pontoMilhar);
-    ret = prefixoNum.toString().trim() + " " + ret + " " + sufixoNum.toString().trim();
-    ret = $ret.trim();
+    if(!isEmpty(thousandSep)) ret = number_format(ret, decimalPlaces, decimalSep, thousandSep);
+    ret = prefix.toString().trim() + " " + ret + " " + suffix.toString().trim();
+    ret = ret.trim();
 
-    return $ret;
+    return ret;
 }
 
 /**
  * Function recreateObject.
- * Recria o objeto limpando-o
- * @param obj
+ * Recreates the object in the HTML DOM or cleans it
+ *
+ * @param obj Object to be recreated on DOM.
  */
 function recreateObject(obj){
     let clone = null;
@@ -303,40 +315,43 @@ function recreateObject(obj){
     obj.remove();
 }
 
-//Funções costumizadas para mascara de numeros
+/**
+ * Mask for numbers function
+ */
 $.fn.extend({
     /**
-     * Method fnMaskNumero.
-     * Mascara que contempla todos os tipos de mascaras possiveis referentes decimais e inteiros
+     * Method fnNumberMask.
+     * Mask that encompasses all possible types of masks related to decimals and integers
      *
-     * @data dec_sep            Separador dos decimais
-     * @data thous_sep          Separador dos milhares
-     * @data dec_places         Número de casas decimais permitidas (0-6)
-     * @data prefixo            Especifica o prefixo colocado no texto
-     * @data sufixo             Especifica o sufixo colocado no texto
-     * @data allow_neg          Permite ou não numeros negativos
+     * @data dec_sep Decimal Separator
+     * @data thous_sep Thousand Separator
+     * @data dec_places Decimal places allowed (0-6)
+     * @data prefix Mask prefix
+     * @data suffix Mask suffix
+     * @data allow_neg Allow or not negative numbers in mask
      */
-    fnMaskNumero: function () {
+	fnNumberMask: function () {
         /**
-         * Function formataValoresFnMaskNumero
-         * Irá formatar os valores dos objetos para as funções subsequentes
-         * @param obj object Objeto para ser formatado
+         * Function formatValuesFnNumberMask
+         * Will format the values of the objects for subsequent functions
+		 *
+         * @param obj object Object to be formatted
          * @returns {*}
          */
-        function formataValoresFnMaskNumero(obj) {
+        function formatValuesFnNumberMask(obj) {
             if(isEmpty(obj)) return {};
 
-            let valorAgora = $(obj).val();
-            let dec_places = parseInt(apenasNumeros($(obj).data('dec_places')));
-            let prefixo    = $(obj).data('prefixo');
-            let sufixo     = $(obj).data('sufixo');
-            let thous_sep  = removerSeguintesChars($(obj).data('thous_sep'), '0123456789+-' + prefixo + sufixo);
-            let dec_sep    = removerSeguintesChars($(obj).data('dec_sep'), '0123456789+-' + prefixo + sufixo);
+            let valNow = $(obj).val();
+            let dec_places = parseInt(onlyNumbers($(obj).data('dec_places')));
+            let prefix    = $(obj).data('prefix');
+            let suffix     = $(obj).data('suffix');
+            let thous_sep  = removeChrs($(obj).data('thous_sep'), '0123456789+-' + prefix + suffix);
+            let dec_sep    = removeChrs($(obj).data('dec_sep'), '0123456789+-' + prefix + suffix);
             let allow_neg  = !isEmpty($(obj).data('allow_neg'));
-            let apenasInteiro = false;
-            let isPositivo = false;
-            let valorFloat = 0;
-            let valorFloatManipulado = "";
+            let onlyInteger = false;
+            let isPositive = false;
+            let valFloat = 0;
+            let valFloatAux = "";
             let aux;
 
             if(
@@ -344,112 +359,115 @@ $.fn.extend({
                 dec_places < 0
             ) {
                 dec_places = 0;
-                apenasInteiro = true;
+				onlyInteger = true;
             }else if(dec_places > 6) {
                 dec_places = 6;
             }
-            if(isEmpty(valorAgora)) {
-                valorAgora = "0";
-                valorFloatManipulado = "0";
+            if(isEmpty(valNow)) {
+                valNow = "0";
+                valFloatAux = "0";
             }
             if(isEmpty(dec_sep)) dec_sep = ".";
-            if(isEmpty(prefixo)) prefixo = "";
-            else                 prefixo += " ";
-            if(isEmpty(sufixo)) sufixo = "";
-            else                sufixo = " " + sufixo;
+            if(isEmpty(prefix)) prefix = "";
+            else                 prefix += " ";
+            if(isEmpty(suffix)) suffix = "";
+            else                suffix = " " + suffix;
             if(
                 isEmpty(thous_sep) ||
                 dec_sep === thous_sep
             ) thous_sep = "";
 
-            valorAgora = valorAgora.toString();
+            valNow = valNow.toString();
             dec_sep = dec_sep.toString();
-            prefixo = prefixo.toString();
-            sufixo = sufixo.toString();
+            prefix = prefix.toString();
+            suffix = suffix.toString();
             thous_sep = thous_sep.toString();
 
-            valorFloat =
+            valFloat =
                 parseFloat(
                     formataFloat(
-                        valorAgora,
+                        valNow,
                         dec_sep,
                         dec_places,
                         '.',
                         '',
                         '',
                         allow_neg,
-                        apenasInteiro,
+						onlyInteger,
                         ''
                     ).toString()
                 );
-            if(apenasInteiro) valorFloat = parseInt(valorFloat.toString());
-            if(isEmptyDecimal(valorFloat)) valorFloat = 0;
-            isPositivo =
+            if(onlyInteger) valFloat = parseInt(valFloat.toString());
+            if(isEmptyDecimal(valFloat)) valFloat = 0;
+            isPositive =
                 !allow_neg ||
                 (
-                    valorFloat >= 0 &&
-                    !hasChar(valorAgora, '-')
+                    valFloat >= 0 &&
+                    !hasStr(valNow, '-')
                 ) ||
-                hasChar(valorAgora, '+');
+				hasStr(valNow, '+');
 
-            aux = removerTodosCharExceto(valorAgora, ('0123456789' + dec_sep)).toString().split(dec_sep);
+            aux = removeChrsExcept(valNow, ('0123456789' + dec_sep)).toString().split(dec_sep);
             aux[1] = aux[1] !== undefined && aux[1] !== null ? aux[1].toString() : "";
 
-            valorFloatManipulado =
+            valFloatAux =
                 (
-                    !isPositivo ? "-" : ""
+                    !isPositive ? "-" : ""
                 ) +
                 (
                     !isEmptyDecimal(aux[0]) ? parseInt(aux[0]) : "0"
                 ) +
                 (
                     (
-                        !apenasInteiro && hasChar(valorAgora, dec_sep)
+                        !onlyInteger && hasStr(valNow, dec_sep)
                             ? (dec_sep + aux[1])
                             : ""
-                    ).toString().substr(0, (dec_places + 1))
+                    ).toString().substring(0, (dec_places + 1))
                 );
 
             return {
-                valorAgora: valorAgora,
-                valorFloat: valorFloat,
-                valorFloatManipulado: valorFloatManipulado,
+                valNow: valNow,
+                valFloat: valFloat,
+                valFloatAux: valFloatAux,
                 dec_sep: dec_sep,
                 dec_places: dec_places,
-                prefixo: prefixo,
-                sufixo: sufixo,
+                prefix: prefix,
+                suffix: suffix,
                 thous_sep: thous_sep,
                 allow_neg: allow_neg,
-                isPositivo: isPositivo,
-                apenasInteiro: apenasInteiro,
+                isPositive: isPositive,
+				onlyInteger: onlyInteger,
             };
         }
         /**
          * Function pre.
-         * Realiza a formatação do número ao clicar no campo para a edição
-         * @param e Evento
+         * Performs number formatting when clicking on the field for editing
+		 *
+         * @param e Event
          */
         function preMask(e){
-            let obj = formataValoresFnMaskNumero(this);
-            $(this).val(obj.valorFloat.toString().replace(".", obj.dec_sep));
+            let obj = formatValuesFnNumberMask(this);
+            $(this).val(obj.valFloat.toString().replace(".", obj.dec_sep));
         }
         /**
          * Function onMask.
-         * Realiza a formatação do número durante a digitação no campo
-         * @param e Evento
+         * Formats the number while typing in the field
+		 *
+         * @param e Event
          */
         function onMask(e) {
-            let obj = formataValoresFnMaskNumero(this);
-            $(this).val(obj.valorFloatManipulado);
+            let obj = formatValuesFnNumberMask(this);
+            $(this).val(obj.valFloatAux);
         }
         /**
-         * Function posMascaraNumero.
-         * Após sair da digitação faz a formatação do número
-         * @param e evento da ocorrencia (Não usado)
+         * Function posMask.
+         * After exiting typing, it formats the number
+		 *
+         * @param e Event
          */
         function posMask(e){
-            let obj = formataValoresFnMaskNumero(this);
-            $(this).val(obj.prefixo + number_format(obj.valorFloat.toString(), obj.dec_places, obj.dec_sep, obj.thous_sep) + obj.sufixo);
+            let obj = formatValuesFnNumberMask(this);
+            $(this).val(obj.prefix + number_format(obj.valFloat.toString(), obj.dec_places, obj.dec_sep, obj.thous_sep) + obj.suffix);
         }
         $(this)
             .off('focus', preMask)
@@ -460,17 +478,16 @@ $.fn.extend({
             .on('blur', posMask);
     }
 });
-//Funções uteis e especificas do sistema
 
 /**
- * Funções especifícas para utilização do sistema
+ * Specific functions for system use
  */
 $.fn.extend({
     /**
      * Function fnToggle
-     * Mostra e deixa de mostrar divisórias do sistema
+     * Hide and show divs on HTML DOM
      *
-     * @param force string Define se será forçado o toggle para none ou block (none/block/null)
+     * @param force string Forces specific display status (none/block/null)
      */
     fnToggle: function(force) {
         if(!isEmpty(force)) {
@@ -487,17 +504,17 @@ $.fn.extend({
 });
 
 /**
- * Function ativaFuncoesGerais.
- * Realiza a ativação de funções de mascaras e transformações do portal
+ * Function initializeSystem.
+ * Initialize functions of the system
  */
-function ativaFuncoesGerais() {
+function initializeSystem() {
     recreateObject($("input[data-mask='number']"));
-    $("input[data-mask='number']").fnMaskNumero();
+    $("input[data-mask='number']").fnNumberMask();
 
     $("input[data-mask='number_letters']").off('input');
     $("input[data-mask='number_letters']").on('input', function () {
-        $(this).val(apenasNumerosLetras($(this).val()));
+        $(this).val(onlyNumbersLetters($(this).val()));
     });
 }
 
-ativaFuncoesGerais();
+initializeSystem();

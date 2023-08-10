@@ -116,7 +116,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
                     <div class="form-group">
                         <label for="num-frames">O.S. - Number of Frames (Example: 10)</label>
                         <input type="text" class="form-control" id="num-frames" name="num-frames" data-mask="number"
-                               data-dec_places="0" data-prefixo="" data-sufixo=""
+                               data-dec_places="0" data-prefix="" data-suffix=""
                                data-thous_sep="" data-dec_sep="," data-allow_neg="0" />
                     </div>
                 </div>
