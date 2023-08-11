@@ -10,10 +10,10 @@ php -S localhost:8000
 
 Access the project in the browser
 ```shell
-http://localhost:8000
+start http://localhost:8000
 ```
 
 # Functional URL
 ```shell
-https://os-pagination.nobugneverlag.com.br/
+start https://os-pagination.nobugneverlag.com.br/
 ```
